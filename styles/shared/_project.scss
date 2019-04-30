@@ -1,3 +1,134 @@
 /**
  * Project specific styling.
  */
+
+$category-colors: (
+  ("health-medical", #ebe3d3),
+  ("financial-service", #d5e1ec),
+  ("retail-service", #edd4d4),
+  ("manufacturing", #dbe3ce),
+  ("utility", #d6d6e6),
+  ("other", #b7b78a)
+);
+
+* {
+  font-size: 14px;
+}
+
+.hero h1 {
+  margin: 0 auto 0.5em;
+  font-size: 4em;
+  line-height: 0.555em;
+
+  @include media-breakpoint-up(md) {
+    font-size: 5.55em;
+    line-height: 0.75em;
+  }
+
+  .sub-title {
+    display: inline-block;
+    font-size: 0.45em;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    line-break: 0.85em;
+
+    @include media-breakpoint-down(sm) {
+      font-size: 0.4em;
+    }
+
+    @include media-breakpoint-up(md) {
+      font-size: 0.55em;
+    }
+
+    sup {
+      display: inline-block;
+      font-size: 0.5em;
+      vertical-align: super;
+      padding-left: 0.15em;
+    }
+  }
+}
+
+.intro-paragraph {
+  margin-top: -1em;
+  margin-bottom: 4em;
+}
+
+form.inline-form {
+  display: flex;
+  padding-bottom: 1em;
+  border-bottom: 3px solid #676767;
+  margin-bottom: 2em;
+  text-align: center;
+
+  .inline-form-element {
+    label,
+    & > div {
+      display: inline-block;
+    }
+
+    label {
+      margin-right: 1em;
+    }
+  }
+
+  button {
+    padding: 0.5em;
+  }
+}
+
+.controls {
+  margin-bottom: 1.5em;
+
+  button {
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+    color: $color-text;
+    border: 2px solid transparent;
+    background-color: $color-white;
+    margin-right: 0.5em;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(#767676, 0.5);
+    }
+  }
+
+  button.active {
+    background-color: $color-white;
+    border: 2px solid #767676;
+  }
+
+  @each $c in $category-colors {
+    .category-color-#{nth($c, 1)} {
+      background-color: nth($c, 2);
+      border: 2px solid transparent;
+
+      &.active,
+      &:hover {
+        background-color: darken(nth($c, 2), 20%);
+        border: 2px solid #767676;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(nth($c, 2), 0.5);
+      }
+    }
+  }
+}
+
+.company-list {
+  margin: 0;
+  padding: 0;
+}
+
+footer .credits {
+  font-size: 0.65em;
+  padding-top: 4em;
+  margin-bottom: 4em;
+
+  p {
+    @include font-styles("benton-sans");
+
+    margin-bottom: 1em;
+  }
+}

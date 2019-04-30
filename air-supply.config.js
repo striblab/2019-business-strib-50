@@ -7,8 +7,12 @@
  */
 
 // Depdencies
-const gutil = require('gulp-util');
+const path = require('path');
 const { argv } = require('yargs');
+const transformCompanies = require('./lib/project/transform-companies');
+
+// Publish year
+const publishYear = 2019;
 
 // Export
 module.exports = {
@@ -27,6 +31,26 @@ module.exports = {
     argv: {
       source: argv,
       type: 'data'
+    },
+    publishYear: {
+      source: publishYear,
+      type: 'data'
+    },
+    companies: {
+      // This is an expensive call
+      ttl: 1000 * 60 * 60 * 24,
+      parsers: 'json',
+      source: `${
+        process.env.DATA_UI_LOCATION
+      }/api/v01/company_details/?finance_publishyear=${publishYear}&limit=100&username=${
+        process.env.DATA_UI_USERNAME
+      }&api_key=${process.env.DATA_UI_API_KEY}`,
+      transform: d =>
+        transformCompanies(d, {
+          publishYear,
+          logos: path.join(__dirname, 'assets', 'images', 'logos')
+        }),
+      output: 'assets/data/companies.json'
     }
 
     // Example external data source

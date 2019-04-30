@@ -1,0 +1,189 @@
+<div class="company category-color-{ categoryid }" data-id="{ coid }" data-category="{ categoryid }">
+  <div class="row">
+    <div class="col col-20">
+      <div class="rank">
+        { ranks[publishYear] }
+      </div>
+    </div>
+
+    <div class="col col-80">
+      <h2>{ name }</h2>
+
+      <p>{ shortdesc }</p>
+
+      {#if getValue(finances, 'footnotes', publishYear) || getValue(employees, 'footnotes', publishYear) || footnotes}
+        <div class="footnotes">
+          { getValue(finances, 'footnotes', publishYear) }
+          { getValue(employees, 'footnotes', publishYear) }
+          { footnotes }
+        </div>
+      {/if}
+
+      <ul class="tags">
+        <li>{ stocksymbol }</li>
+
+        {#if category}
+          <li class="company-category">{ category }</li>
+        {/if}
+
+        <li>{ publishYear - 1 } ranking:
+          {#if ranks[publishYear - 1] }
+            <strong>{ ranks[publishYear - 1] }</strong>
+            <span title="Last year's ranking: { ranks[publishYear - 1] }">
+              {#if ranks[publishYear] < ranks[publishYear - 1]}
+                <i class="strib-icon strib-arrow-value-up"></i>
+              {:elseif ranks[publishYear] > ranks[publishYear - 1]}
+                <i class="strib-icon strib-arrow-value-down"></i>
+              {/if}
+            </span>
+          {:else}
+            <strong><abbr title="Not applicable">n/a</abbr></strong>
+          {/if}
+        </li>
+
+        {#if getValue(employees, 'total', publishYear)}
+          <li>Employees:
+            <strong>{ commas(getValue(employees, 'total', publishYear)) }</strong>
+            <span title="Total number of employees last year: { commas(getValue(employees, 'total', publishYear - 1)) }">
+              {#if getChange(employees, 'total', publishYear, 1, false) > 0}
+                <i class="strib-icon strib-arrow-value-up"></i>
+              {:elseif getChange(employees, 'total', publishYear, 1, false) < 0}
+                <i class="strib-icon strib-arrow-value-down"></i>
+              {/if}
+            </span>
+          </li>
+        {/if}
+
+        <li>{ city }</li>
+
+        <li><a href="{ linkURL(www) }" target="_blank" rel="noopener">{ linkText(www) }</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row data-row">
+    <div class="col col-0 col-20 company-logo">
+      {#if hasLogo }
+        <img src="{ logoLocation }{ coid }.png" alt="Logo for { name }">
+      {:else}
+        &nbsp;
+      {/if}
+    </div>
+
+    <div class="col col-80 col-sm-40 col-md-20">
+      <h3 class="sr-only">Revenue</h3>
+
+      <ul class="data-list">
+        <li class="revenue">
+          <span>${ millions(getValue(finances, 'revenue', publishYear)) }</span> in revenue
+        </li>
+
+        <li class="revenue-change">
+          <span class="has-tooltip-title" title="${ millions(getValue(finances, 'revenue', publishYear - 1)) } in { publishYear - 1 }">
+            { getChange(finances, 'revenue', publishYear) }
+          </span>
+
+          {#if getChange(finances, 'revenue', publishYear, 1, false) > 0}
+            <i class="strib-icon strib-arrow-value-up"></i>
+          {:elseif getChange(finances, 'revenue', publishYear, 1, false) < 0}
+            <i class="strib-icon strib-arrow-value-down"></i>
+          {/if}
+          change from { publishYear - 1 }
+        </li>
+      </ul>
+    </div>
+
+    <div class="col col-80 col-sm-40 col-md-20">
+      <h3 class="sr-only">Profits</h3>
+
+      <ul class="data-list">
+        <li class="profits">
+          <span>${ millions(getValue(finances, 'netincomebeforeextra', publishYear)) }</span> in profits
+        </li>
+
+        <li class="profits-change">
+          {#if getValue(finances, 'netincomebeforeextra', publishYear - 1) > 0 && getValue(finances, 'netincomebeforeextra', publishYear) >= 0}
+            <span class="has-tooltip-title" title="${ millions(getValue(finances, 'netincomebeforeextra', publishYear - 1)) } in { publishYear - 1 }">{ getChange(finances, 'netincomebeforeextra', publishYear) }</span>
+
+            {#if getChange(finances, 'netincomebeforeextra', publishYear, 1, false) > 0}
+              <i class="strib-icon strib-arrow-value-up"></i> change
+            {:elseif getChange(finances, 'netincomebeforeextra', publishYear, 1, false) < 0}
+              <i class="strib-icon strib-arrow-value-down"></i> change
+            {/if}
+          {:else}
+            <span class="not-meaningful"><abbr title="Not meaningful">NM</abbr></span>
+          {/if}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col col-80 col-sm-40 col-md-20">
+      <h3 class="sr-only">Assets</h3>
+
+      <ul class="data-list">
+        <li class="assets">
+          <span>${ millions(getValue(finances, 'totalassets', publishYear)) }</span> in total assets
+        </li>
+
+        <li class="assets-change">
+          <span class="has-tooltip-title" title="${ millions(getValue(finances, 'totalassets', publishYear - 1)) } in { publishYear - 1 }">{ getChange(finances, 'totalassets', publishYear) }</span>
+            {#if getChange(finances, 'totalassets', publishYear, 1, false) > 0}
+              <i class="strib-icon strib-arrow-value-up"></i> change
+            {:elseif getChange(finances, 'totalassets', publishYear, 1, false) < 0}
+              <i class="strib-icon strib-arrow-value-down"></i> change
+            {/if}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col col-80 col-sm-40 col-md-20">
+      <h3 class="sr-only">Market capitalization</h3>
+
+      <ul class="data-list">
+        <li class="marketcap">
+          <span>${ millions(getValue(finances, 'marketcap', publishYear)) }</span> market capitalization
+        </li>
+
+        <li class="marketcap-change">
+          <span class="has-tooltip-title" title="${ millions(getValue(finances, 'marketcap', publishYear - 1)) } in { publishYear - 1 }">{ getChange(finances, 'marketcap', publishYear) }</span>
+            {#if getChange(finances, 'marketcap', publishYear, 1, false) > 0}
+              <i class="strib-icon strib-arrow-value-up"></i> change
+            {:elseif getChange(finances, 'marketcap', publishYear, 1, false) < 0}
+              <i class="strib-icon strib-arrow-value-down"></i> change
+            {/if}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  import helpers from "../lib/project/company-helpers";
+
+  export default {
+    components: {},
+
+    oncreate() {},
+
+    helpers: {
+      //currency: helpers.currency,
+      //round: helpers.round,
+      getValue: helpers.getValue,
+      getChange: helpers.getChange,
+      //formatDate: helpers.formatDate,
+      //abbreviateNumber: helpers.abbreviateNumber,
+      commas: helpers.commas,
+      millions: helpers.millions,
+      //officerName: helpers.officerName,
+      linkURL: helpers.linkURL,
+      linkText: helpers.linkText
+    },
+
+    data() {
+      return {
+        colorList: [],
+        logoLocation: "./assets/images/logos/"
+      };
+    }
+  };
+</script>

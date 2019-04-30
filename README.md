@@ -2,7 +2,34 @@
 
 Annual top businesses in Minnesota
 
+## Data
 
+Our database of businesses, non-profits and finances are in the Data Drop database. There is an interface for this specific data at the [Data UI](https://github.com/striblab/data-ui).
+
+## Setup
+
+Make sure the following values are environment variables, these can be defined in the [`dotenv`](https://www.npmjs.com/package/dotenv) file.
+
+- `DATA_UI_LOCATION`: Base URL to [Data UI](https://github.com/striblab/data-ui); should be something like `https://example.example/data-ui/`
+- `DATA_UI_USERNAME`: Username for your API key. If you do not have one, get someone to make you one.
+- `DATA_UI_API_KEY`: API key.
+- `BUSINESS_DB_URI`: The URI to the database.
+
+### Importing
+
+Currently, our process for getting new data for the year into the database is by gathering data from [Eikon](https://eikon.thomsonreuters.com/index.html).
+
+1. The Business team will create a spreadsheet, a copy is at `sources/fundamentals-2018.xlsx`
+1. This spreadsheet is loaded into a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1ezMutOIRcqZAvbL8fLXV9mhl0ycMhsa9ClmFChQKAQ8/edit#gid=1925833538) with specific columns.
+   - [2018 spreadsheet](https://docs.google.com/spreadsheets/d/1mOjXawmMLyWA0BfmBNdqkpYbg_rNC-UKHW8QQlsFWJk/edit#gid=0)
+   - Update the spreadsheet so that it either has a stock symbol or COID that can be found in Data UI. If it's not in Data UI, make a new Company record.
+1. Previous year's rank (2018) was manually put into `sources/ranks-2018.json`, but going forward, this should not be necessary.
+1. Run import script.
+   - For 2019: `node lib/project/import-companies.js --sheet="https://docs.google.com/spreadsheets/d/e/2PACX-1vQx3nk5N8fbQykqyXrF-i2jpzwVFTYG8PIOCEXyjK0HAm9J0tm92cgFFX5hIPOOOGdgoflsupFkGGU1/pub?output=csv" --publish-year=2019 --previous="sources/ranks-2018.json"`
+   - Use a local copy of the database for testing.
+   - Make sure to backup any database before making updates or inserts.
+   - Use the `--commit` argument to actually commit changes to the database.
+   - Use environment variable `DEBUG=import-companies*` to see any debug information.
 
 ## Publishing
 

@@ -1,16 +1,93 @@
 
 <div class="strib-styles ssa ssb ssc">
   <section class="container-lg">
-    <p>Content goes here.</p>
+    <header class="hero">
+      <h1>
+        Star Tribune 50<br>
+        <span class="sub-title">The 28<sup>th</sup> Annual Report</span>
+      </h1>
 
+      <p class="lead container-md">TKTK TK</p>
+
+      <div class="byline">
+        <address>By
+          <a rel="author" href="http://www.startribune.com/patrick-kennedy/10645186/">Patrick Kennedy</a>
+        </address>
+        <span class="spacer"></span>
+        Star Tribune
+        <span class="spacer-alt"></span>
+        <time pubdate datetime="2019-06-16T00:00:00">June 16, 2019</time>
+      </div>
+
+      <div class="sharing-placeholder">
+        <!-- share -->
+      </div>
+    </header>
+
+    <main>
+      {#if isBrowser}
+        <div class="controls" transition:slide>
+          <h1 aria-label="controls-form" class="sr-only">Controls to adjust list of companies</h1>
+
+          <form class="inline-form" id="controls-form">
+            <div class="inline-form-element">
+              <label for="filter-category">Filter:</label>
+              <div id="filter-category" role="group">
+                {#if categories}
+                  {#each Object.entries(categories) as category (category[0])}
+                    <button
+                      class="category-color-{ category[0] } { filter === category[0] ? 'active' : '' }"
+                      type="button" data-value="{category[0] }"
+                      on:click|stopPropagation|preventDefault="set({ filter: category[0] })"
+                    >{ category[1] }</button>
+                  {/each}
+                {/if}
+
+                <button type="button" data-value="" class="active" on:click|stopPropagation|preventDefault="set({ filter: null })">Show all</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      {/if}
+
+      <h1 aria-label="company-list" class="sr-only">List of companies</h1>
+      <ul class="company-list">
+        {#each filteredCompanies as company (company.coid)}
+          <li transition:fade>
+            <Company {...company} publishYear="{ publishYear }" />
+          </li>
+        {:else}
+          <!-- none -->
+        {/each}
+      </ul>
+    </main>
+
+    <footer class="container-md">
+      <div class="credits">
+        <p>The Star Tribune 50 is a measure of the largest publicly held companies with headquarters in Minnesota ranked by revenue. Another 23 companies were considered but whose revenues were too small for the list. Data for the 50 largest companies also includes each company&rsquo;s net income before extraordinary item &mdash; many companies adjusted net income based on corporate tax reform, assets and market capitalization. Data for the list was taken from Thomson Reuters.</p>
+
+        <p>The list excludes public companies that do not trade on major exchanges, closely held companies, which usually do not disclose financial data, cooperatives and fraternal benefits organizations. Companies that closed acquisitions in 2018 but did not file year-end results were also excluded. Companies who have management headquarters in Minnesota, including Medtronic, Pentair and Winnebago Industries are included.</p>
+
+        <p>Star Tribune graphic: Patrick Kennedy, Alan Palazzolo, Jamie Hutt, David Braunger</p>
+      </div>
+    </footer>
   </section>
 </div>
 
-
-
-
 <script>
+  import Company from "./_company.svelte.html";
+  import { fade, slide } from "svelte-transitions";
+
   export default {
+    components: {
+      Company
+    },
+
+    transitions: {
+      fade,
+      slide
+    },
+
     oncreate() {
       // For content that lives in the CMS directly, we hack
       // around the share bits by removing it before we load
@@ -23,6 +100,37 @@
       if (this.get().attachShare) {
         this.get().attachShare();
       }
+
+      // Is browser
+      this.set({ isBrowser: true });
+    },
+
+    computed: {
+      filteredCompanies({ companies, filter }) {
+        if (!filter) {
+          return companies;
+        }
+
+        return companies.filter(c => {
+          return c.categoryid === filter;
+        });
+      }
+    },
+
+    data() {
+      return {
+        filter: undefined,
+        // Need for client side
+        publishYear: 2019,
+        categories: {
+          utility: "Utility",
+          manufacturing: "Manufacturing",
+          "retail-service": "Retail/Service",
+          "financial-service": "Financial",
+          "health-medical": "Health/Medical",
+          other: "Other"
+        }
+      };
     }
   };
 </script>

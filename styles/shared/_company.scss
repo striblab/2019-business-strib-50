@@ -1,0 +1,197 @@
+.company {
+  padding-bottom: 2em;
+  border-bottom: 2px solid #e8e8e8;
+  margin-bottom: 2em;
+  list-style: none;
+
+  @each $c in $category-colors {
+    &.category-color-#{nth($c, 1)} .rank {
+      background-color: nth($c, 2);
+    }
+  }
+
+  .strib-arrow-value-up {
+    color: map-get($theme, "green-dark");
+  }
+
+  .strib-arrow-value-down {
+    color: map-get($theme, "red-dark");
+  }
+
+  p {
+    margin-bottom: 0.5em;
+
+    @include font-styles("benton-sans");
+
+    letter-spacing: -0.2px;
+  }
+
+  .rank {
+    // width: 100%;
+    @include font-styles("popular-light");
+
+    font-size: 4em;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    text-align: center;
+    padding: 0.25em;
+    border-radius: 0.1em;
+    background-color: map-get($grays, "lighter");
+
+    @media only screen and (max-width: map-get($breakpoints, "sm")) {
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+  }
+
+  h2 {
+    font-size: 2.2em;
+    padding: 0;
+    margin: 0;
+    line-height: 1em;
+    padding-bottom: 0.2em;
+  }
+
+  .tags {
+    margin: 1em 0 2em;
+    padding: 0;
+
+    li {
+      list-style: none;
+
+      strong {
+        font-size: 1em;
+        line-height: 1em;
+      }
+
+      font-size: 0.85em;
+      display: inline-block;
+      line-height: 1em;
+      padding-right: 0.5em;
+      margin-right: 0.5em;
+      border-right: 2px solid map-get($grays, "lighter");
+
+      a {
+        font-size: inherit;
+      }
+
+      span {
+        line-height: 1em;
+        font-size: 1em;
+
+        i {
+          line-height: 1em;
+          font-size: 1em;
+        }
+      }
+    }
+
+    li:last-child {
+      margin-right: 0;
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+
+  .footnotes {
+    font-size: 0.65em;
+    color: map-get($grays, medium);
+    margin-bottom: 1.25em;
+  }
+
+  .company-logo {
+    display: none;
+
+    @include media-breakpoint-up(sm) {
+      display: block;
+    }
+  }
+
+  .has-tooltip-title {
+    cursor: help;
+  }
+
+  .company-logo {
+    text-align: right;
+
+    img {
+      max-height: 8em;
+      padding-top: 1em;
+      // padding-right:.5rem;
+      margin-right: 0;
+    }
+  }
+
+  .data-row {
+    margin-left: 19%;
+
+    @include media-breakpoint-up(sm) {
+      margin-left: -0.5rem;
+    }
+
+    em {
+      font-size: 0.5em;
+    }
+  }
+
+  .data-list {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1em;
+
+    .strib-icon::before {
+      vertical-align: baseline;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+      font-size: 0.75em;
+      list-style: none;
+
+      @include media-breakpoint-up(md) {
+        font-size: 0.85em;
+        display: block;
+      }
+
+      span {
+        font-size: 1.4em;
+        display: inline-block;
+
+        @include media-breakpoint-up(md) {
+          font-size: 1.5em;
+          display: block;
+        }
+      }
+
+      .not-meaningful {
+        display: inline-block;
+        font-size: 0.75em;
+        color: map-get($grays, medium);
+        margin-bottom: 0.4em;
+      }
+    }
+
+    .revenue,
+    .profits,
+    .employees,
+    .marketcap,
+    .assets {
+      margin-bottom: 0;
+
+      @include media-breakpoint-up(md) {
+        margin-bottom: 1em;
+      }
+
+      span {
+        font-weight: bold;
+        display: inline-block;
+
+        @include media-breakpoint-up(md) {
+          display: block;
+        }
+      }
+    }
+  }
+}
