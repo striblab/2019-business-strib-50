@@ -38,7 +38,7 @@ module.exports = {
     },
     companies: {
       // This is an expensive call
-      ttl: 1000 * 60 * 60 * 24,
+      ttl: 1000 * 60 * 60 * 24 * 3,
       parsers: 'json',
       source: `${
         process.env.DATA_UI_LOCATION
