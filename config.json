@@ -11,21 +11,17 @@
   "cms": {
     "defaultArticleContentTemplateRewriteClass": "article-lcd-body-content",
     "pages": [
-      
       {
         "id": "index",
-        "articleId": "NEEDS-ARTICLE-ID",
-        "lcd": "NEEDS-LCD-ID",
+        "articleId": "506438451",
+        "lcd": "506438471",
         "default": true
       }
-      
     ]
   },
 
-
   "styles": {
-    "globals": [
-    ]
+    "globals": []
   },
   "js": {
     "globals": [
