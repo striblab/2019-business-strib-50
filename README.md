@@ -25,6 +25,7 @@ Currently, our process for getting new data for the year into the database is by
    - Update the spreadsheet so that it either has a stock symbol or COID that can be found in Data UI. If it's not in Data UI, make a new Company record.
 1. Previous year's rank (2018) was manually put into `sources/ranks-2018.json`, but going forward, this should not be necessary.
 1. Run import script.
+   - Make sure to have `BUSINESS_DB_URI` set.
    - For 2019: `node lib/project/import-companies.js --sheet="https://docs.google.com/spreadsheets/d/e/2PACX-1vQx3nk5N8fbQykqyXrF-i2jpzwVFTYG8PIOCEXyjK0HAm9J0tm92cgFFX5hIPOOOGdgoflsupFkGGU1/pub?output=csv" --publish-year=2019 --previous="sources/ranks-2018.json"`
    - Use a local copy of the database for testing.
    - Make sure to backup any database before making updates or inserts.

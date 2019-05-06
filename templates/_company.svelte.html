@@ -79,13 +79,13 @@
         </li>
 
         <li class="revenue-change">
-          <span class="has-tooltip-title" title="${ millions(getValue(finances, 'revenue', publishYear - 1)) } in { publishYear - 1 }">
-            { getChange(finances, 'revenue', publishYear) }
+          <span class="has-tooltip-title" title="${ millions(getPreviousValue(finances, 'revenue', publishYear)) } in { publishYear - 1 }">
+            { getPreviousChange(finances, 'revenue', publishYear) }
           </span>
 
-          {#if getChange(finances, 'revenue', publishYear, 1, false) > 0}
+          {#if getPreviousChange(finances, 'revenue', publishYear, 1, false) > 0}
             <i class="strib-icon strib-arrow-value-up"></i>
-          {:elseif getChange(finances, 'revenue', publishYear, 1, false) < 0}
+          {:elseif getPreviousChange(finances, 'revenue', publishYear, 1, false) < 0}
             <i class="strib-icon strib-arrow-value-down"></i>
           {/if}
           change from { publishYear - 1 }
@@ -102,12 +102,12 @@
         </li>
 
         <li class="profits-change">
-          {#if getValue(finances, 'netincomebeforeextra', publishYear - 1) > 0 && getValue(finances, 'netincomebeforeextra', publishYear) >= 0}
-            <span class="has-tooltip-title" title="${ millions(getValue(finances, 'netincomebeforeextra', publishYear - 1)) } in { publishYear - 1 }">{ getChange(finances, 'netincomebeforeextra', publishYear) }</span>
+          {#if getPreviousValue(finances, 'netincomebeforeextra', publishYear) > 0 && getValue(finances, 'netincomebeforeextra', publishYear) >= 0}
+            <span class="has-tooltip-title" title="${ millions(getPreviousValue(finances, 'netincomebeforeextra', publishYear)) } in { publishYear - 1 }">{ getPreviousChange(finances, 'netincomebeforeextra', publishYear) }</span>
 
-            {#if getChange(finances, 'netincomebeforeextra', publishYear, 1, false) > 0}
+            {#if getPreviousChange(finances, 'netincomebeforeextra', publishYear, 1, false) > 0}
               <i class="strib-icon strib-arrow-value-up"></i> change
-            {:elseif getChange(finances, 'netincomebeforeextra', publishYear, 1, false) < 0}
+            {:elseif getPreviousChange(finances, 'netincomebeforeextra', publishYear, 1, false) < 0}
               <i class="strib-icon strib-arrow-value-down"></i> change
             {/if}
           {:else}
@@ -126,10 +126,10 @@
         </li>
 
         <li class="assets-change">
-          <span class="has-tooltip-title" title="${ millions(getValue(finances, 'totalassets', publishYear - 1)) } in { publishYear - 1 }">{ getChange(finances, 'totalassets', publishYear) }</span>
-            {#if getChange(finances, 'totalassets', publishYear, 1, false) > 0}
+          <span class="has-tooltip-title" title="${ millions(getPreviousValue(finances, 'totalassets', publishYear)) } in { publishYear - 1 }">{ getPreviousChange(finances, 'totalassets', publishYear) }</span>
+            {#if getPreviousChange(finances, 'totalassets', publishYear, 1, false) > 0}
               <i class="strib-icon strib-arrow-value-up"></i> change
-            {:elseif getChange(finances, 'totalassets', publishYear, 1, false) < 0}
+            {:elseif getPreviousChange(finances, 'totalassets', publishYear, 1, false) < 0}
               <i class="strib-icon strib-arrow-value-down"></i> change
             {/if}
         </li>
@@ -145,10 +145,10 @@
         </li>
 
         <li class="marketcap-change">
-          <span class="has-tooltip-title" title="${ millions(getValue(finances, 'marketcap', publishYear - 1)) } in { publishYear - 1 }">{ getChange(finances, 'marketcap', publishYear) }</span>
-            {#if getChange(finances, 'marketcap', publishYear, 1, false) > 0}
+          <span class="has-tooltip-title" title="${ millions(getPreviousValue(finances, 'marketcap', publishYear)) } in { publishYear - 1 }">{ getPreviousChange(finances, 'marketcap', publishYear) }</span>
+            {#if getPreviousChange(finances, 'marketcap', publishYear, 1, false) > 0}
               <i class="strib-icon strib-arrow-value-up"></i> change
-            {:elseif getChange(finances, 'marketcap', publishYear, 1, false) < 0}
+            {:elseif getPreviousChange(finances, 'marketcap', publishYear, 1, false) < 0}
               <i class="strib-icon strib-arrow-value-down"></i> change
             {/if}
         </li>
@@ -169,7 +169,9 @@
       //currency: helpers.currency,
       //round: helpers.round,
       getValue: helpers.getValue,
+      getPreviousValue: helpers.getPreviousValue,
       getChange: helpers.getChange,
+      getPreviousChange: helpers.getPreviousChange,
       //formatDate: helpers.formatDate,
       //abbreviateNumber: helpers.abbreviateNumber,
       commas: helpers.commas,
