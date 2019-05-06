@@ -23,8 +23,8 @@ utils.documentReady(async () => {
 
   // Get companies
   let companies = await (await window.fetch(
-    './assets/data/companies.json'
-    //'//static.startribune.com/news/projects-staging/all/2019-business-strib-50/assets/data/companies.json'
+    //'./assets/data/companies.json'
+    '//static.startribune.com/news/projects-staging/all/2019-business-strib-50/assets/data/companies.json'
   )).json();
 
   // Main component
