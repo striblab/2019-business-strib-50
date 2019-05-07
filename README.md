@@ -32,6 +32,10 @@ Currently, our process for getting new data for the year into the database is by
    - Use the `--commit` argument to actually commit changes to the database.
    - Use environment variable `DEBUG=import-companies*` to see any debug information.
 
+## Print
+
+A CSV file that is useful for the print version will be output to `scratch/companies.csv`. This is done when the `gulp html` command is run, which is apart of any build related command like `gulp develop` or `gulp publish`.
+
 ## Publishing
 
 See [docs/publishing.md](./docs/publishing.md).

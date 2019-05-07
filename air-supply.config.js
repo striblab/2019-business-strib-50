@@ -7,9 +7,12 @@
  */
 
 // Depdencies
+const fs = require('fs-extra');
 const path = require('path');
+const csv = require('d3-dsv').dsvFormat(',');
 const { argv } = require('yargs');
 const transformCompanies = require('./lib/project/transform-companies');
+const printCompanies = require('./lib/project/print-companies');
 
 // Publish year
 const publishYear = 2019;
@@ -45,11 +48,22 @@ module.exports = {
       }/api/v01/company_details/?finance_publishyear=${publishYear}&limit=100&username=${
         process.env.DATA_UI_USERNAME
       }&api_key=${process.env.DATA_UI_API_KEY}`,
-      transform: d =>
-        transformCompanies(d, {
+      transform: d => {
+        let transformed = transformCompanies(d, {
           publishYear,
           logos: path.join(__dirname, 'assets', 'images', 'logos')
-        }),
+        });
+
+        // Want to write out for the application/client and a CSV version for print,
+        // but the `output` option doesn't make that easy so we do it here
+        fs.mkdirpSync('scratch');
+        fs.writeFileSync(
+          'scratch/companies.csv',
+          csv.format(printCompanies(transformed, publishYear))
+        );
+
+        return transformed;
+      },
       output: 'assets/data/companies.json'
     }
 
