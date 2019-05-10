@@ -14,6 +14,8 @@ import utils from './shared/utils.js';
 import Content from '../templates/_index-content.svelte.html';
 
 utils.documentReady(async () => {
+  let env = utils.environment();
+
   // Mark page with note about development or staging
   utils.environmentNoting();
 
@@ -23,8 +25,9 @@ utils.documentReady(async () => {
 
   // Get companies
   let companies = await (await window.fetch(
-    //'./assets/data/companies.json'
-    '//static.startribune.com/news/projects/all/2019-business-strib-50/assets/data/companies.json'
+    env.id === 'develop'
+      ? './assets/data/companies.json'
+      : '//static.startribune.com/news/projects/all/2019-business-strib-50/assets/data/companies.json'
   )).json();
 
   // Main component
