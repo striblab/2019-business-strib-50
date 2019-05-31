@@ -21,7 +21,7 @@ utils.documentReady(async () => {
 
   // Deal with share place holder (remove the elements, then re-attach
   // them in the app component)
-  const attachShare = utils.detachAndAttachElement('.share-placeholder');
+  const attachShare = utils.detachAndAttachElement('.sharing-placeholder');
 
   // Get companies
   let companies = await (await window.fetch(
