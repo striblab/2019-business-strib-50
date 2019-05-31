@@ -132,3 +132,31 @@ footer .credits {
     margin-bottom: 1em;
   }
 }
+.related-stories {
+  margin-bottom:2em;
+  h3 {
+  margin:0;
+    a {
+      text-decoration:none;
+      color:#444;
+      font-size:.8em;
+      span {
+       font-size:1em;
+       padding-bottom:1px;
+       border-bottom:solid 2px #efefef;
+       line-height:130%;
+      }
+    }
+    a:hover {
+      span {
+         border-bottom:solid 2px #ccc;
+      }
+    }
+  }
+}
+hr {
+  padding:0;
+  margin:0;
+  border:none;
+  border-top: 2px solid #e8e8e8;
+}
